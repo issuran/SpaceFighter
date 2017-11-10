@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <iostream>	
 
+#pragma once
+
 class Game {
 public :
 	Game();

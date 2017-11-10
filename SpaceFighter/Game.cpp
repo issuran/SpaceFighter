@@ -1,7 +1,8 @@
 #include "Game.h"
+#include "TextureManager.h"
+#include "GameObject.h"
 
-SDL_Texture* playerText;
-SDL_Rect srcR, destR;
+GameObject* player;
 
 Game::Game() 
 {
@@ -40,9 +41,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		SDL_Surface* tmpSurface = IMG_Load("assets/player.png");
-		playerText = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-		SDL_FreeSurface(tmpSurface);
+		player = new GameObject("assets/player-min.png", renderer, 0, 0);
 	}
 	else {
 		isRunning = false;
@@ -66,19 +65,14 @@ void Game::handleEvents()
 
 void Game::update() 
 {
-	cnt++;
-
-	destR.h = 150;
-	destR.w = 150;
-	destR.x = cnt;
-
+	player->Update();
 }
 
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
 	//this is where we would add stuff to render
-	SDL_RenderCopy(renderer, playerText, NULL, &destR);
+	player->Render();
 
 	SDL_RenderPresent(renderer);
 }
