@@ -41,7 +41,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		player = new GameObject("assets/player-min.png", renderer, 0, 0);
+		player = new GameObject("assets/player.png", renderer, 0, 0);
 	}
 	else {
 		isRunning = false;
