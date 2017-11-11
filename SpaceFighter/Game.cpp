@@ -1,20 +1,20 @@
 #include "Game.h"
 #include "TextureManager.h"
-#include "GameObject.h"
+#include "Map.h"
+#include "Components.h"
 
-GameObject* player;
+Map* map;
+Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
 
-Game::Game() 
-{
+auto& player(manager.addEntity());
 
-}
+Game::Game() 
+{}
 
 Game::~Game() 
-{
-
-}
+{}
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) 
 {
@@ -43,7 +43,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
-		player = new GameObject("assets/player.png", 0, 0);
+		map = new Map();
+
+		player.addComponent<PositionComponent>(0, 0);
+		player.addComponent<SpriteComponent>("assets/nave.png");
 	}
 	else {
 		isRunning = false;
@@ -67,14 +70,21 @@ void Game::handleEvents()
 
 void Game::update() 
 {
-	player->Update();
+	manager.refresh();
+	manager.update();
+
+	//// Example to swap player sprite when achieve 100 pixels in the screen
+	//if (player.getComponent<PositionComponent>().x() > 100) {
+	//	player.getComponent<SpriteComponent>().setTex("assets/dirt.png");
+	//}
 }
 
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
 	//this is where we would add stuff to render
-	player->Render();
+	map->DrawMap();
+	manager.draw();
 
 	SDL_RenderPresent(renderer);
 }

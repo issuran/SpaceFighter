@@ -19,6 +19,8 @@ Tiago Oliveira
 # DONE
 - Basic loop game;
 - Texture Manager;
+- Tilemap;
+- Sprite Component;
 
 # Pendencies
 - Interactions;
