@@ -140,6 +140,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
