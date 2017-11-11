@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "Map.h"
 #include "Components.h"
+#include "Vector2D.h"
 
 Map* map;
 Manager manager;
@@ -45,7 +46,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		map = new Map();
 
-		player.addComponent<PositionComponent>(0, 0);
+		player.addComponent<TransformComponent>(0.0f, 0.0f);
 		player.addComponent<SpriteComponent>("assets/nave.png");
 	}
 	else {
@@ -73,10 +74,12 @@ void Game::update()
 	manager.refresh();
 	manager.update();
 
+	player.getComponent<TransformComponent>().position.Add(Vector2D(1, 0));
+
 	//// Example to swap player sprite when achieve 100 pixels in the screen
-	//if (player.getComponent<PositionComponent>().x() > 100) {
-	//	player.getComponent<SpriteComponent>().setTex("assets/dirt.png");
-	//}
+	/*if (player.getComponent<TransformComponent>().position.x > 100) {
+		player.getComponent<SpriteComponent>().setTex("assets/dirt.png");
+	}*/
 }
 
 void Game::render() 
