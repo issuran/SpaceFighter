@@ -20,6 +20,7 @@ Tiago Oliveira
 - Basic loop game;
 - Texture Manager;
 - Tilemap;
+- Sprite Component;
 
 # Pendencies
 - Interactions;
