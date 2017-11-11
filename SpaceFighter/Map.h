@@ -12,6 +12,9 @@ public:
 
 private:
 
+	static const int rows = 20;
+	static const int columns = 25;
+
 	SDL_Rect src, dest;
 
 	SDL_Texture* dirt;
@@ -19,5 +22,4 @@ private:
 	SDL_Texture* water;
 
 	int map[20][25];
-
 };
