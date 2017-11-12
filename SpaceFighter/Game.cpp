@@ -2,11 +2,14 @@
 #include "TextureManager.h"
 #include "Map.h"
 #include "Components.h"
+#include "Vector2D.h"
 
 Map* map;
 Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
+
+SDL_Event Game::event;
 
 auto& player(manager.addEntity());
 
@@ -45,8 +48,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		map = new Map();
 
-		player.addComponent<PositionComponent>(0, 0);
+		player.addComponent<TransformComponent>(0.0f, 0.0f);
 		player.addComponent<SpriteComponent>("assets/nave.png");
+		player.addComponent<KeyboardController>();
 	}
 	else {
 		isRunning = false;
@@ -55,7 +59,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 void Game::handleEvents() 
 {
-	SDL_Event event;
 	SDL_PollEvent(&event);
 	switch (event.type)
 	{
@@ -73,10 +76,7 @@ void Game::update()
 	manager.refresh();
 	manager.update();
 
-	//// Example to swap player sprite when achieve 100 pixels in the screen
-	//if (player.getComponent<PositionComponent>().x() > 100) {
-	//	player.getComponent<SpriteComponent>().setTex("assets/dirt.png");
-	//}
+
 }
 
 void Game::render() 
