@@ -21,13 +21,13 @@ Tiago Oliveira
 - Texture Manager;
 - Tilemap;
 - Sprite Component;
+- Handling Input (move player);
 
 # Pendencies
+- Colision Detection;
 - Interactions;
-- Key Presses;
 - Animations;
 - Sounds;
 - Motion;
-- Colision Detection;
 ...
 Well, what can I say, it lacks a lot of stuff, such as a playable game :D
