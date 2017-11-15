@@ -86,8 +86,10 @@ void Game::update()
 	manager.update();
 
 	if (Collision::AABB(player.getComponent<ColliderComponent>().collider,
-		ground.getComponent<ColliderComponent>().collider)) {
+		ground.getComponent<ColliderComponent>().collider)) 
+	{
 		player.getComponent<TransformComponent>().scale = 1;
+		player.getComponent<TransformComponent>().velocity * -1;
 		std::cout << "Ground Hit!" << std::endl;
 	}
 }
