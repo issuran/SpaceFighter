@@ -25,7 +25,7 @@ Tiago Oliveira
 - Colision Detection;
 
 # Pendencies
-- Colision Detection;
+- Collision Detection;
 - Interactions;
 - Animations;
 - Sounds;
