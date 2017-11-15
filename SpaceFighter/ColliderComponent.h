@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 #include "SDL.h"
-#include "ECS.h"
-#include "TransformComponent.h"
+#include "Components.h"
 
 class ColliderComponent : public Component
 {
@@ -22,6 +21,8 @@ public:
 			entity->addComponent<TransformComponent>();
 		}
 		transform = &entity->getComponent<TransformComponent>();
+
+		Game::colliders.push_back(this);
 	}
 
 	void update() override {

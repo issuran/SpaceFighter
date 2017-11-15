@@ -1,7 +1,8 @@
 #pragma once
 
-#include"Components.h"
-#include"SDL.h"
+#include "Components.h"
+#include "SDL.h"
+#include "TextureManager.h"
 
 class SpriteComponent : public Component
 {
@@ -13,6 +14,7 @@ private:
 public:
 
 	SpriteComponent() = default;
+
 	SpriteComponent(const char* path) {
 		setTex(path);
 	}
