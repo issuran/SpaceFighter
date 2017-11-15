@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Components.h"
 #include "Vector2D.h"
+#include "Collision.h"
 
 Map* map;
 Manager manager;
@@ -11,7 +12,14 @@ SDL_Renderer* Game::renderer = nullptr;
 
 SDL_Event Game::event;
 
+std::vector<ColliderComponent*> Game::colliders;
+
 auto& player(manager.addEntity());
+auto& ground(manager.addEntity());
+
+auto& tile0(manager.addEntity());
+auto& tile1(manager.addEntity());
+auto& tile2(manager.addEntity());
 
 Game::Game() 
 {}
@@ -48,9 +56,22 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		map = new Map();
 
-		player.addComponent<TransformComponent>(0.0f, 0.0f);
+		tile0.addComponent<TileComponent>(200, 200, 32, 32, 0);
+		tile1.addComponent<TileComponent>(250, 250, 32, 32, 1);
+		tile1.addComponent<ColliderComponent>("dirt");
+		tile2.addComponent<TileComponent>(150, 150, 32, 32, 2);
+		tile2.addComponent<ColliderComponent>("grass");
+
+		player.addComponent<TransformComponent>(2);
 		player.addComponent<SpriteComponent>("assets/nave.png");
 		player.addComponent<KeyboardController>();
+		player.addComponent<ColliderComponent>("player");
+
+		ground.addComponent<TransformComponent>(300.0f, 300.0f, 800, 32, 1);
+		ground.addComponent<SpriteComponent>("assets/dirt.png");
+		ground.addComponent<ColliderComponent>("wall");
+
+
 	}
 	else {
 		isRunning = false;
@@ -76,7 +97,10 @@ void Game::update()
 	manager.refresh();
 	manager.update();
 
-
+	for (auto cc : colliders) {
+		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
+	}
+	
 }
 
 void Game::render() 
