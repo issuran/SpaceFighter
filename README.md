@@ -22,12 +22,11 @@ Tiago Oliveira
 - Tilemap;
 - Sprite Component;
 - Handling Input (move player);
-- Colision Detection;
-
-# Pendencies
 - Collision Detection;
 - Interactions;
 - Animations;
+
+# Pendencies
 - Sounds;
 - Motion;
 ...
