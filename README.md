@@ -37,3 +37,8 @@ Tiago Oliveira
 
 ...
 Well, what can I say, it lacks a lot of stuff, such as a playable game :D
+
+# Special Thanks
+Let's Make Games channel for the amazing game development tutorial
+
+- Check his Youtube channel: https://www.youtube.com/user/creaper
