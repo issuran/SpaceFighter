@@ -16,13 +16,21 @@ std::vector<ColliderComponent*> Game::colliders;
 
 auto& player(manager.addEntity());
 auto& ground(manager.addEntity());
+auto& background(manager.addEntity());
+
+//The background scrolling offset 
+int scrollingOffset = 0;
+//SDL_Surface* background;
 
 enum groupLabels : std::size_t{
 	groupMap,
 	groupPlayers,
 	groupEnemies,
-	groupColliders
+	groupColliders,
+	groupBackground
 };
+
+SDL_Texture *texture;
 
 Game::Game() 
 {}
@@ -57,20 +65,26 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 
+
 		map = new Map();
 
-		Map::LoadMap("assets/p16x16.map", 16, 16);
+		//Map::LoadMap("assets/p16x16.map", 16, 16);
 
-		player.addComponent<TransformComponent>(2);
+		background.addComponent<TransformComponent>(0.0f, 0.0f, 640, 800, 1);
+		background.addComponent<BackgroundComponent>("assets/bg.png");
+		background.addGroup(groupBackground);
+
+		player.addComponent<TransformComponent>(50.0f, 250.0f, 36, 106, 1);
 		player.addComponent<SpriteComponent>("assets/nave_sprite.png", 4, 100);
 		player.addComponent<KeyboardController>();
 		player.addComponent<ColliderComponent>("player");
 		player.addGroup(groupPlayers);
 
-		ground.addComponent<TransformComponent>(300.0f, 300.0f, 800, 32, 1);
+
+		/*ground.addComponent<TransformComponent>(300.0f, 300.0f, 800, 32, 1);
 		ground.addComponent<SpriteComponent>("assets/dirt.png");
 		ground.addComponent<ColliderComponent>("wall");
-		ground.addGroup(groupMap);
+		ground.addGroup(groupMap);*/
 
 
 	}
@@ -101,17 +115,29 @@ void Game::update()
 	for (auto cc : colliders) {
 		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
 	}
+
+	//Scroll background
+	/*--scrollingOffset;
+	if (scrollingOffset < -background->w);
+	{
+		scrollingOffset = 0;
+	}*/
 	
 }
 
 auto& tiles(manager.getGroup(groupMap));
 auto& players(manager.getGroup(groupPlayers));
 auto& enemies(manager.getGroup(groupEnemies));
+auto& backgrounds(manager.getGroup(groupBackground));
 
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
-  
+
+	for (auto& b : backgrounds) {
+		b->draw();
+	}
+
 	for (auto& t : tiles) {
 		t->draw();
 	}
@@ -123,6 +149,7 @@ void Game::render()
 	for (auto& e : enemies) {
 		e->draw();
 	}
+
 	SDL_RenderPresent(renderer);
 }
 
