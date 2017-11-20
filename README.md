@@ -25,9 +25,15 @@ Tiago Oliveira
 - Collision Detection;
 - Interactions;
 - Animations;
+- Parallax Effect;
 
 # Pendencies
 - Sounds;
 - Motion;
+- Enemies;
+- Main Screen;
+- Pause Screen;
+- Game Over Screen;
+
 ...
 Well, what can I say, it lacks a lot of stuff, such as a playable game :D
