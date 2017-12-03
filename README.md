@@ -26,6 +26,8 @@ Tiago Oliveira
 - Interactions;
 - Animations;
 - Parallax Effect;
+- Splash Screen;
+- Music Background;
 
 # Pendencies
 - Sounds;
