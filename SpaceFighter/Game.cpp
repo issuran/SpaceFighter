@@ -4,6 +4,9 @@
 #include "Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
+#include <SDL_mixer.h>
+
+Mix_Music *gMusic = NULL;
 
 Map* map;
 Manager manager;
@@ -80,6 +83,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		player.addComponent<ColliderComponent>("player");
 		player.addGroup(groupPlayers);
 
+		//Load music 
+		int resultrr = 0;
+		int flagsd = MIX_INIT_MP3;
+		/*if (flagsd != (resultrr = Mix_Init(MIX_INIT_))) {
+			printf("Could not initialize mixer (result: %d).\n", resultrr);
+			printf("Mix_Init: %s\n", Mix_GetError());
+			exit(1);
+		}*/
+		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+		gMusic = Mix_LoadMUS( "sounds/game.mid" );
+		Mix_PlayMusic(gMusic, 1);
 
 		/*ground.addComponent<TransformComponent>(300.0f, 300.0f, 800, 32, 1);
 		ground.addComponent<SpriteComponent>("assets/dirt.png");
