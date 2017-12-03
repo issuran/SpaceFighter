@@ -92,7 +92,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			exit(1);
 		}*/
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-		gMusic = Mix_LoadMUS( "sounds/the_raising_fighting_spirit.mid" );
+		gMusic = Mix_LoadMUS( "sounds/game.mid" );
 		Mix_PlayMusic(gMusic, 1);
 
 		/*ground.addComponent<TransformComponent>(300.0f, 300.0f, 800, 32, 1);
