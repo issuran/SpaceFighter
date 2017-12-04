@@ -14,11 +14,16 @@ SDL_Event Splash::event;
 
 int cont = 0;
 
+bool isMainMenu = false;
+
 //The surface contained by the window 
 SDL_Surface* gScreenSurface = NULL;
 
 SDL_Texture *img = NULL;
+SDL_Texture *img1 = NULL;
 SDL_Texture *img2 = NULL;
+SDL_Texture *img3 = NULL;
+SDL_Texture *img4 = NULL;
 SDL_Rect texr;
 
 Splash::Splash()
@@ -59,7 +64,10 @@ void Splash::init(const char* title, int xpos, int ypos, int width, int height, 
 
 		// load our image
 		img = IMG_LoadTexture(renderer, "assets/splash.png");
+		img1 = IMG_LoadTexture(renderer, "assets/splash1.png");
 		img2 = IMG_LoadTexture(renderer, "assets/splash2.png");
+		img3 = IMG_LoadTexture(renderer, "assets/splash3.png");
+		img4 = IMG_LoadTexture(renderer, "assets/mainmenu.png");
 
 		int w, h; // texture width & height
 		SDL_QueryTexture(img2, NULL, NULL, &w, &h); // get the width and height of the texture
@@ -95,7 +103,7 @@ void Splash::handleEvents()
 
 void Splash::update()
 {
-	if (cont > 600) isRunning = false;
+	if (cont > 1000) isRunning = false;
 	cont++;
 	std::cout << cont << std::endl;
 }
@@ -105,9 +113,15 @@ void Splash::render()
 	SDL_RenderClear(renderer);
 
 	// copy the texture to the rendering context
-	if (cont < 300) SDL_RenderCopy(renderer, img, NULL, &texr);
+	if (cont < 95) SDL_RenderCopy(renderer, img, NULL, &texr);
 
-	else SDL_RenderCopy(renderer, img2, NULL, &texr);
+	else if (cont < 330) SDL_RenderCopy(renderer, img1, NULL, &texr);
+
+	else if (cont < 565) SDL_RenderCopy(renderer, img2, NULL, &texr);
+
+	else if (cont < 800) SDL_RenderCopy(renderer, img3, NULL, &texr);
+
+	else SDL_RenderCopy(renderer, img4, NULL, &texr);
 
 	SDL_RenderPresent(renderer);
 }
@@ -115,7 +129,7 @@ void Splash::render()
 void Splash::clean()
 {
 	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
+	SDL_DestroyRenderer(renderer);	
 	SDL_Quit();
 	std::cout << "Splash Cleaned" << std::endl;
 }
