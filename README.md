@@ -28,6 +28,7 @@ Tiago Oliveira
 - Parallax Effect;
 - Splash Screen;
 - Music Background;
+- Screen Boundaries
 
 # Pendencies
 - Sounds;
