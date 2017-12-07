@@ -31,9 +31,9 @@ Tiago Oliveira
 - Screen Boundaries
 
 # Pendencies
-- Sounds;
-- Motion;
+- Sound Effects;
 - Enemies;
+- Enemies Respawn;
 - Main Screen;
 - Pause Screen;
 - Game Over Screen;
