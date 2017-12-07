@@ -18,7 +18,10 @@ SDL_Event Game::event;
 std::vector<ColliderComponent*> Game::colliders;
 
 auto& player(manager.addEntity());
-auto& ground(manager.addEntity());
+auto& screenBoundaryLeft(manager.addEntity());
+auto& screenBoundaryTop(manager.addEntity());
+auto& screenBoundaryDown(manager.addEntity());
+auto& screenBoundaryRight(manager.addEntity());
 auto& background(manager.addEntity());
 
 //The background scrolling offset 
@@ -86,19 +89,29 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		//Load music 
 		int resultrr = 0;
 		int flagsd = MIX_INIT_MP3;
-		/*if (flagsd != (resultrr = Mix_Init(MIX_INIT_))) {
-			printf("Could not initialize mixer (result: %d).\n", resultrr);
-			printf("Mix_Init: %s\n", Mix_GetError());
-			exit(1);
-		}*/
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 		gMusic = Mix_LoadMUS( "sounds/game.mid" );
 		Mix_PlayMusic(gMusic, 1);
 
-		/*ground.addComponent<TransformComponent>(300.0f, 300.0f, 800, 32, 1);
-		ground.addComponent<SpriteComponent>("assets/dirt.png");
-		ground.addComponent<ColliderComponent>("wall");
-		ground.addGroup(groupMap);*/
+		screenBoundaryLeft.addComponent<TransformComponent>(0.0f, 0.0f, 640, 0, 1);
+		screenBoundaryLeft.addComponent<SpriteComponent>("assets/dirt.png");
+		screenBoundaryLeft.addComponent<ColliderComponent>("boundary left");
+		screenBoundaryLeft.addGroup(groupMap);
+
+		screenBoundaryTop.addComponent<TransformComponent>(0.0f, 0.0f, 0, 800, 1);
+		screenBoundaryTop.addComponent<SpriteComponent>("assets/dirt.png");
+		screenBoundaryTop.addComponent<ColliderComponent>("boundary top");
+		screenBoundaryTop.addGroup(groupMap);
+		
+		screenBoundaryDown.addComponent<TransformComponent>(0, 640, 0, 800, 1);
+		screenBoundaryDown.addComponent<SpriteComponent>("assets/dirt.png");
+		screenBoundaryDown.addComponent<ColliderComponent>("boundary down");
+		screenBoundaryDown.addGroup(groupMap);
+		
+		screenBoundaryRight.addComponent<TransformComponent>(800, 0, 640, 0, 1);
+		screenBoundaryRight.addComponent<SpriteComponent>("assets/dirt.png");
+		screenBoundaryRight.addComponent<ColliderComponent>("boundary right");
+		screenBoundaryRight.addGroup(groupMap);
 
 
 	}
@@ -130,13 +143,21 @@ void Game::update()
 		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
 	}
 
-	//Scroll background
-	/*--scrollingOffset;
-	if (scrollingOffset < -background->w);
+	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryLeft.getComponent<ColliderComponent>().collider))
 	{
-		scrollingOffset = 0;
-	}*/
-	
+		player.getComponent<TransformComponent>().velocity * -2;
+
+		std::cout << "Boundary Hit!" << std::endl;
+	}
+	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryTop.getComponent<ColliderComponent>().collider)) {
+		player.getComponent<TransformComponent>().velocity * -1;
+	}
+	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryDown.getComponent<ColliderComponent>().collider)) {
+		player.getComponent<TransformComponent>().velocity * -1;
+	}
+	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryRight.getComponent<ColliderComponent>().collider)) {
+		player.getComponent<TransformComponent>().velocity * -1;
+	}
 }
 
 auto& tiles(manager.getGroup(groupMap));
