@@ -26,11 +26,14 @@ Tiago Oliveira
 - Interactions;
 - Animations;
 - Parallax Effect;
+- Splash Screen;
+- Music Background;
+- Screen Boundaries
 
 # Pendencies
-- Sounds;
-- Motion;
+- Sound Effects;
 - Enemies;
+- Enemies Respawn;
 - Main Screen;
 - Pause Screen;
 - Game Over Screen;
