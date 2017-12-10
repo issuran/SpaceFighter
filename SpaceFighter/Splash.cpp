@@ -6,7 +6,7 @@
 #include "Collision.h"
 #include <SDL_mixer.h>
 
-Mix_Music *sMusic = NULL;
+Mix_Music *splash_music = NULL;
 
 SDL_Renderer* Splash::renderer = nullptr;
 
@@ -14,17 +14,15 @@ SDL_Event Splash::event;
 
 int cont = 0;
 
-bool isMainMenu = false;
-
-//The surface contained by the window 
-SDL_Surface* gScreenSurface = NULL;
+//The surface_splash contained by the window 
+SDL_Surface *surface_splash = NULL;
 
 SDL_Texture *img = NULL;
 SDL_Texture *img1 = NULL;
 SDL_Texture *img2 = NULL;
 SDL_Texture *img3 = NULL;
 SDL_Texture *img4 = NULL;
-SDL_Rect texr;
+SDL_Rect tex_splash;
 
 Splash::Splash()
 {}
@@ -32,33 +30,17 @@ Splash::Splash()
 Splash::~Splash()
 {}
 
-void Splash::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Splash::init(SDL_Window *Window, SDL_Renderer *Renderer, SDL_Surface *Surface)
 {
-	int flags = 0;
-	if (fullscreen)
-	{
-		flags = SDL_WINDOW_FULLSCREEN;
-	}
-
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		std::cout << "Subsystems Initialised!..." << std::endl;
 
-		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-		if (window)
-		{
-			std::cout << "Window created!" << std::endl;
-		}
+		window_splash = Window;
 
-		//Get window surface 
-		gScreenSurface = SDL_GetWindowSurface(window);
+		surface_splash = Surface;
 
-		renderer = SDL_CreateRenderer(window, -1, 0);
-		if (renderer)
-		{
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-			std::cout << "Renderer created!" << std::endl;
-		}
+		renderer = Renderer;
 
 		isRunning = true;
 
@@ -67,20 +49,19 @@ void Splash::init(const char* title, int xpos, int ypos, int width, int height, 
 		img1 = IMG_LoadTexture(renderer, "assets/splash1.png");
 		img2 = IMG_LoadTexture(renderer, "assets/splash2.png");
 		img3 = IMG_LoadTexture(renderer, "assets/splash3.png");
-		img4 = IMG_LoadTexture(renderer, "assets/mainmenu.png");
+		img4 = IMG_LoadTexture(renderer, "assets/splash4.png");
 
 		int w, h; // texture width & height
 		SDL_QueryTexture(img2, NULL, NULL, &w, &h); // get the width and height of the texture
-		texr.x = 0; 
-		texr.y = 0;
-		texr.w = w; 
-		texr.h = h;
+		tex_splash.x = 0; 
+		tex_splash.y = 0;
+		tex_splash.w = w; 
+		tex_splash.h = h;
 
 		//Load music 		
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-		sMusic = Mix_LoadMUS("sounds/open1.mid");
-		Mix_PlayMusic(sMusic, 1);
-
+		splash_music = Mix_LoadMUS("sounds/splash.mid");
+		Mix_PlayMusic(splash_music, 1);
 	}
 	else {
 		isRunning = false;
@@ -90,14 +71,22 @@ void Splash::init(const char* title, int xpos, int ypos, int width, int height, 
 void Splash::handleEvents()
 {
 	SDL_PollEvent(&event);
-	switch (event.type)
-	{
-	case SDL_QUIT:
-		isRunning = false;
-		break;
 
-	default:
-		break;
+	if (event.type == SDL_KEYDOWN) {
+		switch (Splash::event.key.keysym.sym)
+		{
+		case SDL_QUIT:
+			isRunning = false;
+			break;
+		case SDLK_KP_ENTER:
+			isRunning = false;
+			break;
+		case SDLK_SPACE:
+			isRunning = false;
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -113,23 +102,28 @@ void Splash::render()
 	SDL_RenderClear(renderer);
 
 	// copy the texture to the rendering context
-	if (cont < 95) SDL_RenderCopy(renderer, img, NULL, &texr);
+	if (cont < 95) SDL_RenderCopy(renderer, img, NULL, &tex_splash);
 
-	else if (cont < 330) SDL_RenderCopy(renderer, img1, NULL, &texr);
+	else if (cont < 330) SDL_RenderCopy(renderer, img1, NULL, &tex_splash);
 
-	else if (cont < 565) SDL_RenderCopy(renderer, img2, NULL, &texr);
+	else if (cont < 565) SDL_RenderCopy(renderer, img2, NULL, &tex_splash);
 
-	else if (cont < 800) SDL_RenderCopy(renderer, img3, NULL, &texr);
+	else if (cont < 800) SDL_RenderCopy(renderer, img3, NULL, &tex_splash);
 
-	else SDL_RenderCopy(renderer, img4, NULL, &texr);
+	else SDL_RenderCopy(renderer, img4, NULL, &tex_splash);
 
 	SDL_RenderPresent(renderer);
 }
 
 void Splash::clean()
 {
-	SDL_DestroyWindow(window);
+	SDL_DestroyWindow(window_splash);
 	SDL_DestroyRenderer(renderer);	
+	SDL_DestroyTexture(img);
+	SDL_DestroyTexture(img1);
+	SDL_DestroyTexture(img2);
+	SDL_DestroyTexture(img3);
+	SDL_DestroyTexture(img4);
 	SDL_Quit();
 	std::cout << "Splash Cleaned" << std::endl;
 }

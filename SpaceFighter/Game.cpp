@@ -44,30 +44,13 @@ Game::Game()
 Game::~Game() 
 {}
 
-void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) 
+void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 {
-	int flags = 0;
-	if (fullscreen) 
-	{
-		flags = SDL_WINDOW_FULLSCREEN;
-	}
-
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		std::cout << "Subsystems Initialised!..." << std::endl;
+		window = Window;
 
-		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-		if (window)
-		{
-			std::cout << "Window created!" << std::endl;
-		}
-
-		renderer = SDL_CreateRenderer(window, -1, 0);
-		if (renderer)
-		{
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-			std::cout << "Renderer created!" << std::endl;
-		}
+		renderer = Renderer;
 
 		isRunning = true;
 
@@ -90,8 +73,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		int resultrr = 0;
 		int flagsd = MIX_INIT_MP3;
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-		gMusic = Mix_LoadMUS( "sounds/game.mid" );
-		Mix_PlayMusic(gMusic, 1);
+		gMusic = Mix_LoadMUS( "sounds/game_x2.mid" );
+		Mix_PlayMusic(gMusic, -1);
 
 		screenBoundaryLeft.addComponent<TransformComponent>(0.0f, 0.0f, 640, 0, 1);
 		screenBoundaryLeft.addComponent<SpriteComponent>("assets/dirt.png");

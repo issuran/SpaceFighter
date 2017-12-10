@@ -11,7 +11,7 @@ public:
 	Splash();
 	~Splash();
 
-	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+	void init(SDL_Window *Window, SDL_Renderer* Renderer, SDL_Surface* Surface);
 
 	void handleEvents();
 	void update();
@@ -26,5 +26,5 @@ public:
 private:
 	int cnt = 0;
 	bool isRunning;
-	SDL_Window *window;
+	SDL_Window *window_splash;
 };

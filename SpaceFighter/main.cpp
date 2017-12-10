@@ -1,9 +1,34 @@
 #include "SDL.h"
 #include "Game.h"
 #include "Splash.h"
+#include "MainMenu.h"
 
 Game *game = nullptr;
 Splash *splash = nullptr;
+MainMenu *main_menu = nullptr;
+
+SDL_Window *window = nullptr;
+SDL_Renderer* renderer = nullptr;
+SDL_Surface* surfaces = nullptr;
+
+
+SDL_Window* createWindow(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
+	int flags = 0;
+	if (fullscreen)
+	{
+		flags = SDL_WINDOW_FULLSCREEN;
+	}
+
+	return SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+}
+
+SDL_Renderer* createRenderer(SDL_Window *window) {
+	return SDL_CreateRenderer(window, -1, 0);
+}
+
+SDL_Surface* createSurface(SDL_Window *window) {
+	return SDL_GetWindowSurface(window);
+}
 
 int main(int argc, char *argv[]) {
 	/*while (game is running) {
@@ -20,9 +45,30 @@ int main(int argc, char *argv[]) {
 	int frameTime;
 
 	splash = new Splash();
+	main_menu = new MainMenu();
 	game = new Game();
 
-	splash->init("Splash Screen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	//Create game window
+	window = createWindow("Splash Screen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+
+	if (window)
+	{
+		std::cout << "Window created!" << std::endl;
+	}
+
+	renderer = createRenderer(window);
+
+	if (renderer)
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		std::cout << "Renderer created!" << std::endl;
+	}
+
+	surfaces = createSurface(window);
+
+	splash->init(window, renderer, surfaces);
 
 	while (splash->running())
 	{
@@ -31,6 +77,7 @@ int main(int argc, char *argv[]) {
 
 		splash->update();
 		splash->render();
+		splash->handleEvents();
 
 		frameTime = SDL_GetTicks() - frameStart;
 
@@ -40,7 +87,30 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	game->init("Game Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+	SDL_SetWindowTitle(window, "Main Menu Screen");
+
+	main_menu->init(window, renderer, surfaces);
+
+	while (main_menu->running())
+	{
+
+		frameStart = SDL_GetTicks();
+
+		main_menu->update();
+		main_menu->render();
+		main_menu->handleEvents();
+
+		frameTime = SDL_GetTicks() - frameStart;
+
+		if (frameDelay > frameTime)
+		{
+			SDL_Delay(frameDelay - frameTime);
+		}
+	}
+
+	SDL_SetWindowTitle(window, "Game Screen");
+
+	game->init(window, renderer);
 
 	while (game->running())
 	{
