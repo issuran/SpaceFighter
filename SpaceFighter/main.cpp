@@ -1,9 +1,11 @@
 #include "SDL.h"
 #include "Game.h"
 #include "Splash.h"
+#include "MainMenu.h"
 
 Game *game = nullptr;
 Splash *splash = nullptr;
+MainMenu *main_menu = nullptr;
 
 SDL_Window *window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -43,6 +45,7 @@ int main(int argc, char *argv[]) {
 	int frameTime;
 
 	splash = new Splash();
+	main_menu = new MainMenu();
 	game = new Game();
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -74,6 +77,28 @@ int main(int argc, char *argv[]) {
 
 		splash->update();
 		splash->render();
+		splash->handleEvents();
+
+		frameTime = SDL_GetTicks() - frameStart;
+
+		if (frameDelay > frameTime)
+		{
+			SDL_Delay(frameDelay - frameTime);
+		}
+	}
+
+	SDL_SetWindowTitle(window, "Main Menu Screen");
+
+	main_menu->init(window, renderer, surfaces);
+
+	while (main_menu->running())
+	{
+
+		frameStart = SDL_GetTicks();
+
+		main_menu->update();
+		main_menu->render();
+		main_menu->handleEvents();
 
 		frameTime = SDL_GetTicks() - frameStart;
 

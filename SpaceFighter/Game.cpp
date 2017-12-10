@@ -73,8 +73,8 @@ void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 		int resultrr = 0;
 		int flagsd = MIX_INIT_MP3;
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-		gMusic = Mix_LoadMUS( "sounds/game.mid" );
-		Mix_PlayMusic(gMusic, 1);
+		gMusic = Mix_LoadMUS( "sounds/game_x2.mid" );
+		Mix_PlayMusic(gMusic, -1);
 
 		screenBoundaryLeft.addComponent<TransformComponent>(0.0f, 0.0f, 640, 0, 1);
 		screenBoundaryLeft.addComponent<SpriteComponent>("assets/dirt.png");
