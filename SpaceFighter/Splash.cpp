@@ -17,7 +17,7 @@ int cont = 0;
 bool isMainMenu = false;
 
 //The surface contained by the window 
-SDL_Surface* gScreenSurface = NULL;
+SDL_Surface *surface = NULL;
 
 SDL_Texture *img = NULL;
 SDL_Texture *img1 = NULL;
@@ -32,33 +32,17 @@ Splash::Splash()
 Splash::~Splash()
 {}
 
-void Splash::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Splash::init(SDL_Window *Window, SDL_Renderer *Renderer, SDL_Surface *Surface)
 {
-	int flags = 0;
-	if (fullscreen)
-	{
-		flags = SDL_WINDOW_FULLSCREEN;
-	}
-
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		std::cout << "Subsystems Initialised!..." << std::endl;
 
-		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-		if (window)
-		{
-			std::cout << "Window created!" << std::endl;
-		}
+		window = Window;
 
-		//Get window surface 
-		gScreenSurface = SDL_GetWindowSurface(window);
+		surface = Surface;
 
-		renderer = SDL_CreateRenderer(window, -1, 0);
-		if (renderer)
-		{
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-			std::cout << "Renderer created!" << std::endl;
-		}
+		renderer = Renderer;
 
 		isRunning = true;
 
@@ -80,7 +64,6 @@ void Splash::init(const char* title, int xpos, int ypos, int width, int height, 
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 		sMusic = Mix_LoadMUS("sounds/open1.mid");
 		Mix_PlayMusic(sMusic, 1);
-
 	}
 	else {
 		isRunning = false;
@@ -130,6 +113,11 @@ void Splash::clean()
 {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);	
+	SDL_DestroyTexture(img);
+	SDL_DestroyTexture(img1);
+	SDL_DestroyTexture(img2);
+	SDL_DestroyTexture(img3);
+	SDL_DestroyTexture(img4);
 	SDL_Quit();
 	std::cout << "Splash Cleaned" << std::endl;
 }
