@@ -30,13 +30,13 @@ Tiago Oliveira
 - Music Background;
 - Screen Boundaries;
 - Main Screen;
+- Enemies;
+- Enemies Respawn;
+- Game Over Screen;
 
 # Pendencies
 - Sound Effects;
-- Enemies;
-- Enemies Respawn;
 - Pause Screen;
-- Game Over Screen;
 
 ...
 Well, what can I say, it lacks a lot of stuff, such as a playable game :D

@@ -18,6 +18,9 @@ SDL_Event Game::event;
 std::vector<ColliderComponent*> Game::colliders;
 
 auto& player(manager.addEntity());
+auto& enemy(manager.addEntity());
+auto& enemy_toxic(manager.addEntity());
+auto& enemy_fury(manager.addEntity());
 auto& screenBoundaryLeft(manager.addEntity());
 auto& screenBoundaryTop(manager.addEntity());
 auto& screenBoundaryDown(manager.addEntity());
@@ -68,6 +71,24 @@ void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 		player.addComponent<KeyboardController>();
 		player.addComponent<ColliderComponent>("player");
 		player.addGroup(groupPlayers);
+
+		enemy.addComponent<TransformComponent>(640.0f, 350.0f, 55, 56, 1);
+		enemy.addComponent<SpriteComponent>("assets/alienship.png");
+		enemy.addComponent<ColliderComponent>("enemy");		
+		enemy.addComponent<Alien>();
+		enemy.addGroup(groupEnemies);
+
+		enemy_toxic.addComponent<TransformComponent>(640.0f, 150.0f, 55, 56, 1);
+		enemy_toxic.addComponent<SpriteComponent>("assets/alientoxicship.png");
+		enemy_toxic.addComponent<ColliderComponent>("enemy");
+		enemy_toxic.addComponent<AlienToxic>();
+		enemy_toxic.addGroup(groupEnemies);
+
+		enemy_fury.addComponent<TransformComponent>(640.0f, 550.0f, 55, 56, 1);
+		enemy_fury.addComponent<SpriteComponent>("assets/alienfuryship.png");
+		enemy_fury.addComponent<ColliderComponent>("enemy");
+		enemy_fury.addComponent<AlienFury>();
+		enemy_fury.addGroup(groupEnemies);
 
 		//Load music 
 		int resultrr = 0;
@@ -122,24 +143,47 @@ void Game::update()
 	manager.refresh();
 	manager.update();
 
+	enemy_fury.getComponent<AlienFury>().update(player.getComponent<TransformComponent>().position.y);
+
 	for (auto cc : colliders) {
 		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
 	}
 
 	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryLeft.getComponent<ColliderComponent>().collider))
 	{
-		player.getComponent<TransformComponent>().velocity * -2;
+		if (player.getComponent<TransformComponent>().position.x <= 0) {
+			player.getComponent<TransformComponent>().position.x += 10;
+		}
 
-		std::cout << "Boundary Hit!" << std::endl;
+		
 	}
 	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryTop.getComponent<ColliderComponent>().collider)) {
-		player.getComponent<TransformComponent>().velocity * -1;
+		if (player.getComponent<TransformComponent>().position.y <= 0) {
+			player.getComponent<TransformComponent>().position.y += 10;
+		}
 	}
 	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryDown.getComponent<ColliderComponent>().collider)) {
-		player.getComponent<TransformComponent>().velocity * -1;
+		if (player.getComponent<TransformComponent>().position.y >= 600) {
+			player.getComponent<TransformComponent>().position.y -= 10;
+		}
+		std::cout << "Boundary Hit!" << player.getComponent<TransformComponent>().position.y << std::endl;
 	}
 	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryRight.getComponent<ColliderComponent>().collider)) {
-		player.getComponent<TransformComponent>().velocity * -1;
+		if (player.getComponent<TransformComponent>().position.x >= 640) {
+			player.getComponent<TransformComponent>().position.x-=10;
+		}		
+	}
+	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, enemy.getComponent<ColliderComponent>().collider)) {
+		//enemy.getComponent<TransformComponent>().position.x+=20;
+		isRunning = false;
+	}
+	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, enemy_toxic.getComponent<ColliderComponent>().collider)) {
+		//enemy.getComponent<TransformComponent>().position.x+=20;
+		isRunning = false;
+	}
+	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, enemy_fury.getComponent<ColliderComponent>().collider)) {
+		//enemy.getComponent<TransformComponent>().position.x+=20;
+		isRunning = false;
 	}
 }
 
