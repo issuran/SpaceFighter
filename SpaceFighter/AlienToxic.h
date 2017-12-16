@@ -3,16 +3,18 @@
 #include "ECS.h"
 #include "Components.h"
 
-class Enemy : public Component
+class AlienToxic : public Component
 {
 public:
 	TransformComponent *transform;
 
-	int speed;
+	int speed = 2;
+	float scale = 1;
 
 	void init() override {
 		transform = &entity->getComponent<TransformComponent>();
 	}
+	void update();
 
 private:
 

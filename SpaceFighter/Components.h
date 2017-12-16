@@ -6,4 +6,6 @@
 #include "ColliderComponent.h"
 #include "TileComponent.h"
 #include "BackgroundComponent.h"
-#include "Enemy.h"
+#include "Alien.h"
+#include "AlienToxic.h"
+#include "AlienFury.h"
