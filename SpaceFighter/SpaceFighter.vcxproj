@@ -89,10 +89,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\include;C:\Game Development\SDL2-2.0.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\include;C:\Game Development\SDL2-2.0.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Game Development\SDL2_mixer-2.0.2\lib\x64;C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\lib\x64;C:\Game Development\SDL2-2.0.6\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Game Development\SDL2_mixer-2.0.2\lib\x64;C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\lib\x64;C:\Game Development\SDL2-2.0.7\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -117,12 +117,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\include;C:\Game Development\SDL2-2.0.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\include;C:\Game Development\SDL2-2.0.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Game Development\SDL2_mixer-2.0.2\lib\x64;C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\lib\x64;C:\Game Development\SDL2-2.0.6\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Game Development\SDL2_mixer-2.0.2\lib\x64;C:\Game Development\SDL-Image-2.0.2\SDL2_image-2.0.2\lib\x64;C:\Game Development\SDL2-2.0.7\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -155,6 +155,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />

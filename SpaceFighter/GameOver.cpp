@@ -51,12 +51,13 @@ void GameOver::init(SDL_Window *Window, SDL_Renderer *Renderer, SDL_Surface *Sur
 		tex_over.h = h;
 
 		//Load music 		
+		Mix_HaltMusic();
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 		gameover_music = Mix_LoadMUS("sounds/game_over.mid");
 		Mix_PlayMusic(gameover_music, -1);
 	}
 	else {
-		isRunning = false;
+		//isRunning = false;
 	}
 }
 
@@ -68,10 +69,10 @@ void GameOver::handleEvents()
 		switch (GameOver::event.key.keysym.sym)
 		{
 		case SDL_QUIT:
-			isRunning = false;
+			//isRunning = false;
 			break;
 		case SDLK_KP_ENTER:
-			isRunning = false;
+			//isRunning = false;
 			break;
 		case SDLK_SPACE:
 			isRunning = false;
@@ -97,9 +98,8 @@ void GameOver::render()
 
 void GameOver::clean()
 {
-	SDL_DestroyWindow(window_over);
-	SDL_DestroyRenderer(renderer);
+	SDL_RenderClear(renderer);
 	SDL_DestroyTexture(img_gameover);
-	SDL_Quit();
-	std::cout << "MainMenu Cleaned" << std::endl;
+	Mix_HaltMusic();
+	std::cout << "Game Over Cleaned" << std::endl;
 }
