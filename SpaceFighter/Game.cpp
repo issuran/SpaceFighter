@@ -73,6 +73,7 @@ void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 		enemy.addComponent<TransformComponent>(550.0f, 250.0f, 55, 56, 1);
 		enemy.addComponent<SpriteComponent>("assets/alienship.png");
 		enemy.addComponent<ColliderComponent>("enemy");		
+		enemy.addComponent<Enemy>();
 		enemy.addGroup(groupEnemies);
 
 		//Load music 
@@ -157,7 +158,8 @@ void Game::update()
 		}		
 	}
 	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, enemy.getComponent<ColliderComponent>().collider)) {
-		enemy.getComponent<TransformComponent>().position.x+=2;
+		//enemy.getComponent<TransformComponent>().position.x+=20;
+		isRunning = false;
 	}
 }
 

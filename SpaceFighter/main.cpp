@@ -90,6 +90,8 @@ int main(int argc, char *argv[]) {
 	SDL_SetWindowTitle(window, "Main Menu Screen");
 
 	main_menu->init(window, renderer, surfaces);
+	
+	splash->clean();
 
 	while (main_menu->running())
 	{
@@ -111,6 +113,8 @@ int main(int argc, char *argv[]) {
 	SDL_SetWindowTitle(window, "Game Screen");
 
 	game->init(window, renderer);
+
+	main_menu->clean();
 
 	while (game->running())
 	{

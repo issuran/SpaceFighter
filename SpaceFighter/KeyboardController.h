@@ -28,6 +28,8 @@ public:
 			case SDLK_d:
 				transform->velocity.x = 1;
 				break;
+			case SDLK_SPACE:
+				transform->speed = 6;
 			default:
 				break;
 			}
@@ -48,6 +50,8 @@ public:
 			case SDLK_d:
 				transform->velocity.x = 0;
 				break;
+			case SDLK_SPACE:
+				transform->speed = 3;
 			default:
 				break;
 			}

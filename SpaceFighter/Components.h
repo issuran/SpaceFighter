@@ -6,3 +6,4 @@
 #include "ColliderComponent.h"
 #include "TileComponent.h"
 #include "BackgroundComponent.h"
+#include "Enemy.h"
