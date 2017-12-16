@@ -30,11 +30,11 @@ Tiago Oliveira
 - Music Background;
 - Screen Boundaries;
 - Main Screen;
+- Enemies;
+- Enemies Respawn;
 
 # Pendencies
 - Sound Effects;
-- Enemies;
-- Enemies Respawn;
 - Pause Screen;
 - Game Over Screen;
 
