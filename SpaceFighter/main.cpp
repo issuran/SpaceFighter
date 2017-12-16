@@ -2,10 +2,12 @@
 #include "Game.h"
 #include "Splash.h"
 #include "MainMenu.h"
+#include "GameOver.h"
 
 Game *game = nullptr;
 Splash *splash = nullptr;
 MainMenu *main_menu = nullptr;
+GameOver *game_over = nullptr;
 
 SDL_Window *window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -47,6 +49,9 @@ int main(int argc, char *argv[]) {
 	splash = new Splash();
 	main_menu = new MainMenu();
 	game = new Game();
+	game_over = new GameOver();
+
+	bool isRunningGame = true;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -108,28 +113,82 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	SDL_SetWindowTitle(window, "Game Screen");
+	while (isRunningGame) {
+		SDL_SetWindowTitle(window, "Game Screen");
 
-	game->init(window, renderer);
+		game->init(window, renderer);
 
-	while (game->running())
-	{
-
-		frameStart = SDL_GetTicks();
-
-		game->handleEvents();
-		game->update();
-		game->render();
-
-		frameTime = SDL_GetTicks() - frameStart;
-
-		if (frameDelay > frameTime)
+		while (game->running())
 		{
-			SDL_Delay(frameDelay - frameTime);
+
+			frameStart = SDL_GetTicks();
+
+			game->handleEvents();
+			game->update();
+			game->render();
+
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameDelay > frameTime)
+			{
+				SDL_Delay(frameDelay - frameTime);
+			}
 		}
+
+		SDL_SetWindowTitle(window, "Game Over Screen");
+
+		game_over->init(window, renderer, surfaces);
+
+		while (game_over->running())
+		{
+
+			frameStart = SDL_GetTicks();
+
+			game_over->update();
+			game_over->render();
+			game_over->handleEvents();
+
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameDelay > frameTime)
+			{
+				SDL_Delay(frameDelay - frameTime);
+			}
+		}
+
+		while (game->running())
+		{
+
+			frameStart = SDL_GetTicks();
+
+			game->handleEvents();
+			game->update();
+			game->render();
+
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameDelay > frameTime)
+			{
+				SDL_Delay(frameDelay - frameTime);
+			}
+		}
+
+
+		//Create game window
+		window = createWindow("Splash Screen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+
+		renderer = createRenderer(window);
+
+		if (renderer)
+		{
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			std::cout << "Renderer created!" << std::endl;
+		}
+
+		surfaces = createSurface(window);
 	}
 
-	game->clean();
+	game_over->clean();
 
 	return 0;
 
