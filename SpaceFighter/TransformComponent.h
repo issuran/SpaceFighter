@@ -21,7 +21,7 @@ public:
 		position.Zero();
 	}
 
-	TransformComponent(int sc) {
+	TransformComponent(float sc) {
 		position.Zero();
 		scale = sc;
 	}
@@ -30,7 +30,7 @@ public:
 		position.Zero();
 	}
 
-	TransformComponent(float x, float y, int h, int w, int sc) {
+	TransformComponent(float x, float y, int h, int w, float sc) {
 		position.x = x;
 		position.y = y;
 		height = h;
@@ -40,7 +40,7 @@ public:
 
 	void init() override {
 		velocity.Zero();
-		srand(time(NULL));
+		srand(time(0));
 	}
 
 	void update() override {
@@ -53,12 +53,12 @@ public:
 		position.y = random_position_y();
 	}
 
-	void loop(int pos_y) {
+	void loop(float pos_y) {
 		position.x = 800;
 		position.y = pos_y;
 	}
 
-	int random_position_y() {
+	float random_position_y() {
 
 		return rand() % 500 + 1;
 	}
