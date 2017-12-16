@@ -1,6 +1,7 @@
 #pragma once
 #include "Components.h"
 #include "Vector2D.h"
+#include <ctime>
 
 class TransformComponent : public Component
 {
@@ -12,7 +13,7 @@ public:
 
 	int height = 36;
 	int width = 106;
-	int scale = 1;
+	float scale = 1;
 
 	int speed = 3;
 
@@ -39,10 +40,26 @@ public:
 
 	void init() override {
 		velocity.Zero();
+		srand(time(NULL));
 	}
 
 	void update() override {
 		position.x += velocity.x * speed;
 		position.y += velocity.y * speed;
+	}
+
+	void loop() {
+		position.x = 800;
+		position.y = random_position_y();
+	}
+
+	void loop(int pos_y) {
+		position.x = 800;
+		position.y = pos_y;
+	}
+
+	int random_position_y() {
+
+		return rand() % 500 + 1;
 	}
 };
