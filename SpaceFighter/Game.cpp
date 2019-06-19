@@ -56,9 +56,8 @@ void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 		renderer = Renderer;
 
 		isRunning = true;
-
-
-		map = new Map();
+		
+		//map = new Map();
 
 		//Map::LoadMap("assets/p16x16.map", 16, 16);
 
@@ -98,22 +97,18 @@ void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 		Mix_PlayMusic(gMusic, -1);
 
 		screenBoundaryLeft.addComponent<TransformComponent>(0.0f, 0.0f, 640, 0, 1);
-		screenBoundaryLeft.addComponent<SpriteComponent>("assets/dirt.png");
 		screenBoundaryLeft.addComponent<ColliderComponent>("boundary left");
 		screenBoundaryLeft.addGroup(groupMap);
 
 		screenBoundaryTop.addComponent<TransformComponent>(0.0f, 0.0f, 0, 800, 1);
-		screenBoundaryTop.addComponent<SpriteComponent>("assets/dirt.png");
 		screenBoundaryTop.addComponent<ColliderComponent>("boundary top");
 		screenBoundaryTop.addGroup(groupMap);
 		
 		screenBoundaryDown.addComponent<TransformComponent>(0, 640, 0, 800, 1);
-		screenBoundaryDown.addComponent<SpriteComponent>("assets/dirt.png");
 		screenBoundaryDown.addComponent<ColliderComponent>("boundary down");
 		screenBoundaryDown.addGroup(groupMap);
 		
 		screenBoundaryRight.addComponent<TransformComponent>(800, 0, 640, 0, 1);
-		screenBoundaryRight.addComponent<SpriteComponent>("assets/dirt.png");
 		screenBoundaryRight.addComponent<ColliderComponent>("boundary right");
 		screenBoundaryRight.addGroup(groupMap);
 
@@ -217,9 +212,12 @@ void Game::render()
 
 void Game::clean() 
 {
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
-	SDL_Quit();
+	SDL_RenderClear(renderer);
+	tiles.clear();
+	players.clear();
+	enemies.clear();
+
+	Mix_HaltMusic();
 	std::cout << "Game Cleaned" << std::endl;
 }
 
