@@ -12,7 +12,7 @@ In a space far far away, a brave soldier is looking for a way back home, fightin
 # Author
 Tiago Oliveira
 
-# Bugs
+# Bugs :bug:
 - Report to me by tiago_fernandes89@hotmail.com
 
 
