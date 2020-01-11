@@ -69,9 +69,7 @@ public:
 	}
 
 	void addGroup(Group mGroup);
-	void delGroup(Group mGroup) {
-		groupBitset[mGroup] = false;
-	}
+	void delGroup(Group mGroup);
 
 	template<typename T> bool hasComponent() const {
 		return componentBitSet[getComponentTypeID<T>()];
@@ -107,6 +105,7 @@ public:
 	void update() {
 		for (auto& e : entities) e->update();
 	}
+
 	void draw() {
 		for (auto& e : entities) e->draw();
 	}
@@ -131,6 +130,10 @@ public:
 
 	void addToGroup(Entity* mEntity, Group mGroup) {
 		groupedEntities[mGroup].emplace_back(mEntity);
+	}
+
+	void removeFromGroup(Group mGroup) {
+		groupedEntities[mGroup].clear();
 	}
 
 	std::vector<Entity*>& getGroup(Group mGroup) {

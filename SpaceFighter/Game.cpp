@@ -56,10 +56,6 @@ void Game::init(SDL_Window *Window, SDL_Renderer* Renderer)
 		renderer = Renderer;
 
 		isRunning = true;
-		
-		//map = new Map();
-
-		//Map::LoadMap("assets/p16x16.map", 16, 16);
 
 		background.addComponent<TransformComponent>(0.0f, 0.0f, 640, 800, 1);
 		background.addComponent<BackgroundComponent>("assets/bg.png");
@@ -149,8 +145,6 @@ void Game::update()
 		if (player.getComponent<TransformComponent>().position.x <= 0) {
 			player.getComponent<TransformComponent>().position.x += 10;
 		}
-
-		
 	}
 	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryTop.getComponent<ColliderComponent>().collider)) {
 		if (player.getComponent<TransformComponent>().position.y <= 0) {
@@ -212,6 +206,10 @@ void Game::render()
 
 void Game::clean() 
 {
+	background.delGroup(groupBackground);
+	player.delGroup(groupPlayers);
+	enemy.delGroup(groupEnemies);
+
 	SDL_RenderClear(renderer);
 	tiles.clear();
 	players.clear();
