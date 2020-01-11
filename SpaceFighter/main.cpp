@@ -118,20 +118,20 @@ int main(int argc, char *argv[]) {
 		SDL_Init(SDL_INIT_EVERYTHING);
 
 		//Create game window
-		window = createWindow("Splash Screen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+		//window = createWindow("Splash Screen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
 
-		if (window)
-		{
-			std::cout << "Window created!" << std::endl;
-		}
+		//if (window)
+		//{
+		//	std::cout << "Window created!" << std::endl;
+		//}
 
-		renderer = createRenderer(window);
+		/*renderer = createRenderer(window);
 
 		if (renderer)
 		{
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
-		}
+		}*/
 
 		surfaces = createSurface(window);
 
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 
 		SDL_SetWindowTitle(window, "Game Over Screen");
 
-		game_over->init(window, renderer, surfaces);
+		game_over->init(window, renderer);
 
 		while (game_over->running())
 		{

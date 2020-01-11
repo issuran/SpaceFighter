@@ -14,9 +14,6 @@ SDL_Event GameOver::event;
 
 bool isGameOver = false;
 
-//The surface_main contained by the window 
-SDL_Surface *surface_over = NULL;
-
 SDL_Texture *img_gameover = NULL;
 SDL_Rect tex_over;
 
@@ -26,15 +23,13 @@ GameOver::GameOver()
 GameOver::~GameOver()
 {}
 
-void GameOver::init(SDL_Window *Window, SDL_Renderer *Renderer, SDL_Surface *Surface)
+void GameOver::init(SDL_Window *Window, SDL_Renderer *Renderer)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		std::cout << "Subsystems Initialised!..." << std::endl;
 
 		window_over = Window;
-
-		surface_over = Surface;
 
 		renderer = Renderer;
 
@@ -57,7 +52,7 @@ void GameOver::init(SDL_Window *Window, SDL_Renderer *Renderer, SDL_Surface *Sur
 		Mix_PlayMusic(gameover_music, -1);
 	}
 	else {
-		//isRunning = false;
+		isRunning = false;
 	}
 }
 
@@ -69,10 +64,10 @@ void GameOver::handleEvents()
 		switch (GameOver::event.key.keysym.sym)
 		{
 		case SDL_QUIT:
-			//isRunning = false;
+			isRunning = false;
 			break;
 		case SDLK_KP_ENTER:
-			//isRunning = false;
+			isRunning = false;
 			break;
 		case SDLK_SPACE:
 			isRunning = false;

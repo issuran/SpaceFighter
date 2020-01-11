@@ -11,7 +11,7 @@ public:
 	GameOver();
 	~GameOver();
 
-	void init(SDL_Window *Window, SDL_Renderer* Renderer, SDL_Surface* Surface);
+	void init(SDL_Window *Window, SDL_Renderer* Renderer);
 
 	void handleEvents();
 	void update();
