@@ -37,7 +37,6 @@ int main(int argc, char *argv[]) {
 		handle any user input
 		update all object eg. positions etc.
 		render changes to the display
-
 	}*/
 
 	const int FPS = 60;
@@ -125,23 +124,24 @@ int main(int argc, char *argv[]) {
 		//	std::cout << "Window created!" << std::endl;
 		//}
 
-		/*renderer = createRenderer(window);
+		/*SDL_DestroyRenderer(renderer);
+
+		renderer = createRenderer(window);
 
 		if (renderer)
 		{
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
-		}*/
+		}
 
-		surfaces = createSurface(window);
+		surfaces = createSurface(window);*/
 
 		SDL_SetWindowTitle(window, "Game Screen");
 
 		game->init(window, renderer);
 
 		while (game->running())
-		{
-
+		{			
 			frameStart = SDL_GetTicks();
 
 			game->handleEvents();
@@ -177,8 +177,8 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		game->clean();
 		game_over->clean();
+		game->clean();
 	}
 
 	return 0;

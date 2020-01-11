@@ -131,6 +131,7 @@ void Game::handleEvents()
 
 void Game::update() 
 {
+
 	manager.refresh();
 	manager.update();
 
@@ -140,6 +141,7 @@ void Game::update()
 		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
 	}
 
+	// PLAYER HIT BOUNDARIES
 	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, screenBoundaryLeft.getComponent<ColliderComponent>().collider))
 	{
 		if (player.getComponent<TransformComponent>().position.x <= 0) {
@@ -162,6 +164,30 @@ void Game::update()
 			player.getComponent<TransformComponent>().position.x-=10;
 		}		
 	}
+
+	//// ENEMY HIT LEFT BOUNDARY
+	//else if (Collision::AABB(enemy.getComponent<ColliderComponent>().collider, screenBoundaryLeft.getComponent<ColliderComponent>().collider))
+	//{
+	//	if (enemy.getComponent<TransformComponent>().position.x <= 0) {
+	//		enemy.destroy();
+	//	}
+	//}
+
+	//else if (Collision::AABB(enemy_toxic.getComponent<ColliderComponent>().collider, screenBoundaryLeft.getComponent<ColliderComponent>().collider))
+	//{
+	//	if (enemy_toxic.getComponent<TransformComponent>().position.x <= 0) {
+	//		enemy_toxic.destroy();
+	//	}
+	//}
+
+	//else if (Collision::AABB(enemy_fury.getComponent<ColliderComponent>().collider, screenBoundaryLeft.getComponent<ColliderComponent>().collider))
+	//{
+	//	if (enemy_fury.getComponent<TransformComponent>().position.x <= 0) {
+	//		enemy_fury.destroy();
+	//	}
+	//}
+
+	// END GAME - GOT HIT BY ENEMY
 	else if (Collision::AABB(player.getComponent<ColliderComponent>().collider, enemy.getComponent<ColliderComponent>().collider)) {
 		//enemy.getComponent<TransformComponent>().position.x+=20;
 		isRunning = false;
@@ -214,6 +240,8 @@ void Game::clean()
 	tiles.clear();
 	players.clear();
 	enemies.clear();
+
+//	manager.clear();
 
 	Mix_HaltMusic();
 	std::cout << "Game Cleaned" << std::endl;
